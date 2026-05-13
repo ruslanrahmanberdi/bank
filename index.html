@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitFlow - Daily Habit & Study Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">⚡ HabitFlow</h1>
+                <div class="header-controls">
+                    <button class="btn-dark-mode" id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
+                    <button class="btn-menu" id="menuToggle" title="Menu">☰</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="dashboard">📊 Dashboard</button>
+            <button class="tab-btn" data-tab="tasks">✓ Tasks</button>
+            <button class="tab-btn" data-tab="habits">🔥 Habits</button>
+            <button class="tab-btn" data-tab="pomodoro">⏱️ Pomodoro</button>
+            <button class="tab-btn" data-tab="goals">🎯 Goals</button>
+            <button class="tab-btn" data-tab="stats">📈 Stats</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- DASHBOARD TAB -->
+            <section id="dashboard" class="tab-content active">
+                <div class="dashboard-grid">
+                    <!-- Date & Greeting -->
+                    <div class="date-greeting">
+                        <h2 id="greeting">Good Morning! 🌅</h2>
+                        <p id="currentDate"></p>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-container">
+                        <div class="stat-card neon-cyan">
+                            <div class="stat-value" id="todayTasks">0</div>
+                            <div class="stat-label">Tasks Today</div>
+                        </div>
+                        <div class="stat-card neon-pink">
+                            <div class="stat-value" id="todayCompleted">0</div>
+                            <div class="stat-label">Completed</div>
+                        </div>
+                        <div class="stat-card neon-purple">
+                            <div class="stat-value" id="bestStreak">0</div>
+                            <div class="stat-label">Best Streak 🔥</div>
+                        </div>
+                        <div class="stat-card neon-green">
+                            <div class="stat-value" id="completionRate">0%</div>
+                            <div class="stat-label">Completion</div>
+                        </div>
+                    </div>
+
+                    <!-- Yesterday vs Today -->
+                    <div class="comparison-section">
+                        <h3>📊 Yesterday vs Today</h3>
+                        <div class="comparison-grid">
+                            <div class="comparison-card">
+                                <div class="comparison-label">Yesterday</div>
+                                <div class="comparison-tasks" id="yesterdayTasks">0 tasks</div>
+                                <div class="comparison-completion" id="yesterdayCompletion">0% done</div>
+                            </div>
+                            <div class="comparison-card highlight">
+                                <div class="comparison-label">Today</div>
+                                <div class="comparison-tasks" id="todayComparisonTasks">0 tasks</div>
+                                <div class="comparison-completion" id="todayComparisonCompletion">0% done</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Add Section -->
+                    <div class="quick-add-section">
+                        <h3>⚡ Quick Add</h3>
+                        <div class="quick-add-tabs">
+                            <button class="quick-tab-btn active" data-type="task">Task</button>
+                            <button class="quick-tab-btn" data-type="habit">Habit</button>
+                            <button class="quick-tab-btn" data-type="goal">Goal</button>
+                        </div>
+                        <div class="quick-add-form">
+                            <input type="text" id="quickAddInput" placeholder="Type here...">
+                            <button class="btn btn-primary" id="quickAddBtn">Add</button>
+                        </div>
+                    </div>
+
+                    <!-- Top Performers -->
+                    <div class="top-performers">
+                        <h3>🏆 Top Streaks</h3>
+                        <div id="topStreaksContainer" class="streaks-list">
+                            <p class="empty-state">No streaks yet. Start tracking!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TASKS TAB -->
+            <section id="tasks" class="tab-content">
+                <div class="tasks-container">
+                    <div class="section-header">
+                        <h2>✓ Daily Tasks</h2>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="today">Today</button>
+                            <button class="filter-btn" data-filter="completed">Done</button>
+                            <button class="filter-btn" data-filter="pending">Pending</button>
+                        </div>
+                    </div>
+
+                    <div class="add-task-form">
+                        <input type="text" id="taskInput" placeholder="Add a new task...">
+                        <input type="date" id="taskDate">
+                        <select id="taskPriority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                        <button class="btn btn-primary" id="addTaskBtn">Add Task</button>
+                    </div>
+
+                    <div id="tasksContainer" class="tasks-list">
+                        <p class="empty-state">No tasks yet. Add one to get started!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HABITS TAB -->
+            <section id="habits" class="tab-content">
+                <div class="habits-container">
+                    <div class="section-header">
+                        <h2>🔥 Habit Tracker</h2>
+                    </div>
+
+                    <div class="add-habit-form">
+                        <input type="text" id="habitInput" placeholder="Add a new habit...">
+                        <select id="habitFrequency">
+                            <option value="daily" selected>Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                        <button class="btn btn-primary" id="addHabitBtn">Add Habit</button>
+                    </div>
+
+                    <div id="habitsContainer" class="habits-grid">
+                        <p class="empty-state">No habits yet. Create your first habit!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- POMODORO TAB -->
+            <section id="pomodoro" class="tab-content">
+                <div class="pomodoro-container">
+                    <h2>⏱️ Pomodoro Timer</h2>
+                    
+                    <div class="pomodoro-settings">
+                        <div class="setting-group">
+                            <label>Work Duration (min)</label>
+                            <input type="number" id="workDuration" value="25" min="1" max="60">
+                        </div>
+                        <div class="setting-group">
+                            <label>Break Duration (min)</label>
+                            <input type="number" id="breakDuration" value="5" min="1" max="30">
+                        </div>
+                    </div>
+
+                    <div class="pomodoro-display">
+                        <div class="timer-circle">
+                            <div class="timer-text">
+                                <span id="timerDisplay">25:00</span>
+                            </div>
+                            <svg class="progress-ring" width="200" height="200">
+                                <circle class="progress-ring-bg" cx="100" cy="100" r="90"/>
+                                <circle class="progress-ring-fill" cx="100" cy="100" r="90"/>
+                            </svg>
+                        </div>
+                        <div class="timer-status" id="timerStatus">Ready to focus!</div>
+                    </div>
+
+                    <div class="pomodoro-controls">
+                        <button class="btn btn-primary" id="startTimerBtn">Start</button>
+                        <button class="btn btn-secondary" id="pauseTimerBtn">Pause</button>
+                        <button class="btn btn-secondary" id="resetTimerBtn">Reset</button>
+                    </div>
+
+                    <div class="pomodoro-sessions">
+                        <h3>📊 Today's Sessions</h3>
+                        <div id="sessionsContainer" class="sessions-list">
+                            <p class="empty-state">Start a pomodoro session!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GOALS TAB -->
+            <section id="goals" class="tab-content">
+                <div class="goals-container">
+                    <div class="section-header">
+                        <h2>🎯 Daily Goals</h2>
+                    </div>
+
+                    <div class="add-goal-form">
+                        <input type="text" id="goalInput" placeholder="Set a daily goal...">
+                        <select id="goalCategory">
+                            <option value="health">Health</option>
+                            <option value="study">Study</option>
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <button class="btn btn-primary" id="addGoalBtn">Add Goal</button>
+                    </div>
+
+                    <div id="goalsContainer" class="goals-list">
+                        <p class="empty-state">No goals yet. Set your first goal!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STATS TAB -->
+            <section id="stats" class="tab-content">
+                <div class="stats-detailed-container">
+                    <h2>📈 Statistics & Charts</h2>
+
+                    <div class="chart-section">
+                        <h3>Weekly Progress</h3>
+                        <div class="chart-container">
+                            <canvas id="weeklyChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-section">
+                        <h3>Habit Completion</h3>
+                        <div class="chart-container">
+                            <canvas id="habitChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <h4>Average Completion</h4>
+                            <div class="stat-big" id="avgCompletion">0%</div>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Total Tasks Done</h4>
+                            <div class="stat-big" id="totalDone">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Longest Streak</h4>
+                            <div class="stat-big" id="longestStreak">0 days</div>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Active Habits</h4>
+                            <div class="stat-big" id="activeHabits">0</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
